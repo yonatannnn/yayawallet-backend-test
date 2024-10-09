@@ -1,4 +1,4 @@
-_YaYa Wallet Webhook Processor
+YaYa Wallet Webhook Processor
 # Overview
 
 This project implements a webhook endpoint for YaYa Wallet. The webhook receives notifications of transactions, verifies their authenticity using HMAC signatures, and processes the payload. The solution is designed following a layered architecture with controllers, use cases, services, and repositories.
