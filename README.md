@@ -32,7 +32,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/yonatannnn/yayawallet-backend-test.git
-cd yourproject
+cd yayawallet-backend-test
 ```
 
 Install dependencies:
