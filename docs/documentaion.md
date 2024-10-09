@@ -31,8 +31,7 @@ The solution has been structured into the following layers:
 
 #### Run Tests
 
-Use the `go test ./...` command to run the test suite.  
-You can run tests with verbose output using the command: `go test -v ./...`
+Use the `go test ./controller/` command to run the test suite.  
 
 #### Test Webhook Endpoint
 
