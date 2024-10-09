@@ -45,6 +45,7 @@ func (suite *WebhookHandlerSuite) TestHandleWebhook_Success() {
 	}
 
 	suite.usecaseMock.On("ProcessWebhook", payload, "valid_signature").Return(true, nil)
+	suite.usecaseMock.On("Save", payload).Return(nil)
 
 	// Prepare the request body
 	body := `{"id":"12345","amount":1000,"currency":"USD","created_at_time":1625097600,"timestamp":1625097600,"cause":"Payment","full_name":"John Doe","account_name":"john.doe@example.com","invoice_url":"http://example.com/invoice/12345"}`

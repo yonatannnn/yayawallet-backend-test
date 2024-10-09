@@ -8,7 +8,7 @@ The solution has been structured into the following layers:
 - **Controller**: Manages the HTTP request and sends responses.
 - **Use Case**: Handles business logic, including verifying signatures and saving the payload.
 - **Service**: Provides methods for signature creation and verification, and interacts with the repository.
-- **Repository**: Handles the actual saving of data (currently a mock that logs the data).
+- **Repository**: Handles the actual saving of data.
 
 ## Assumptions
 
@@ -58,6 +58,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 - **Gin Framework**: Used for handling HTTP requests and responses.
 - **Testify**: A testing framework used for structuring unit tests and mocks.
 - **HMAC (SHA-256)**: For verifying the authenticity of webhook payloads.
+- **MongoDB**: Database to store the payload.
 
 ### Approach
 
@@ -66,6 +67,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 - Listens for incoming HTTP POST requests.
 - Parses the request body and validates the JSON payload.
 - Extracts the `YAYA-SIGNATURE` header and passes the payload and signature to the use case layer for further processing.
+- Returns a 200 status code after validation but before saving the payload to the database.
 
 #### Use Case Layer
 
@@ -82,7 +84,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 
 #### Repository Layer
 
-- Currently implemented as a mock that logs the received payload. In a real application, this would be responsible for storing the payload in a database or persistent storage.
+- Responsible for storing the payload in MongoDB.
 
 ### Signature Verification
 

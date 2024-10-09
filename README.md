@@ -7,7 +7,7 @@ This project implements a webhook endpoint for YaYa Wallet. The webhook receives
 
 - HMAC (SHA256) Signature Verification
 - Replay Protection (5-minute window)
-- Mock repository for logging payloads
+- MongoDB repository for saving payloads
 - Unit tests with mocks using Testify
 
 ## Project Structure
@@ -15,7 +15,7 @@ This project implements a webhook endpoint for YaYa Wallet. The webhook receives
 - **controller**: Handles incoming HTTP requests.
 - **usecases**: Contains business logic for processing webhooks.
 - **services**: Implements HMAC signature generation and verification.
-- **repository**: Mock repository for saving payloads.
+- **repository**: MongoDB repository for saving payloads.
 - **models**: Contains data models and interfaces.
 
 ## Setup and Usage
@@ -24,6 +24,7 @@ This project implements a webhook endpoint for YaYa Wallet. The webhook receives
 
 - Golang 1.19+
 - Gin Framework
+- MongoDB
 
 ### Steps to Run
 
@@ -40,10 +41,12 @@ Install dependencies:
 go mod tidy
 ```
 
-Set the `SECRET_KEY` environment variable:
+Set the environment variables:
 
 ```bash
 export SECRET_KEY=your_secret_key
+export PORT=your_port
+export MONGODB_URL=your_mongodb_url
 ```
 
 Run the application:
@@ -55,7 +58,7 @@ go run main.go
 Use the following cURL command to test the webhook endpoint:
 
 ```bash
-curl -X POST http://localhost:8080/webhook \
+curl -X POST http://localhost:$PORT/webhook \
 -H "Content-Type: application/json" \
 -H "YAYA-SIGNATURE: valid_signature" \
 -d '{"id":"12345","amount":1000,"currency":"USD","created_at_time":1625097600,"timestamp":1625097600,"cause":"Payment","full_name":"John Doe","account_name":"john.doe@example.com","invoice_url":"http://example.com/invoice/12345"}'
@@ -100,7 +103,7 @@ Make a POST request to `/webhook` with a valid JSON body and a `YAYA-SIGNATURE` 
 Example request:
 
 ```bash
-curl -X POST http://localhost:8080/webhook \
+curl -X POST http://localhost:$PORT/webhook \
 -H "Content-Type: application/json" \
 -H "YAYA-SIGNATURE: valid_signature" \
 -d '{"id":"12345","amount":1000,"currency":"USD","created_at_time":1625097600,"timestamp":1625097600,"cause":"Payment","full_name":"John Doe","account_name":"john.doe@example.com","invoice_url":"http://example.com/invoice/12345"}'
@@ -118,6 +121,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 - **Gin Framework**: Used for handling HTTP requests and responses.
 - **Testify**: A testing framework used for structuring unit tests and mocks.
 - **HMAC (SHA-256)**: For verifying the authenticity of webhook payloads.
+- **MongoDB**: For storing webhook payloads.
 
 ### Approach
 
@@ -126,6 +130,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 - Listens for incoming HTTP POST requests.
 - Parses the request body and validates the JSON payload.
 - Extracts the `YAYA-SIGNATURE` header and passes the payload and signature to the use case layer for further processing.
+- Returns a 200 status code after validation but before saving the payload.
 
 #### Use Case Layer
 
@@ -142,7 +147,7 @@ This solution implements a webhook processing service for YaYa Wallet. It follow
 
 #### Repository Layer
 
-- Currently implemented as a mock that logs the received payload. In a real application, this would be responsible for storing the payload in a database or persistent storage.
+- Implements saving the payload to MongoDB.
 
 ### Signature Verification
 
@@ -155,10 +160,12 @@ The system checks the webhook’s timestamp and rejects requests older than 5 mi
 ### Running the Project
 
 1. Clone the project from GitHub.
-2. Set the `SECRET_KEY` environment variable:
+2. Set the environment variables:
 
     ```bash
     export SECRET_KEY=your_secret_key
+    export PORT=your_port
+    export MONGODB_URL=your_mongodb_url
     ```
 
 3. Run the server:
