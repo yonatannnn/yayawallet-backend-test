@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"yayawallet-webhook/models"
 
@@ -36,4 +37,14 @@ func (h *WebhookHandler) HandleWebhook(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "success"})
+
+	err = h.usecase.Save(payload)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	fmt.Println("Webhook saved")
+	return
+
 }
