@@ -46,7 +46,7 @@ curl -X POST http://localhost:8080/webhook \
 -d '{"id":"12345","amount":1000,"currency":"USD","created_at_time":1625097600,"timestamp":1625097600,"cause":"Payment","full_name":"John Doe","account_name":"john.doe@example.com","invoice_url":"http://example.com/invoice/12345"}'
 ```
 
-## Project Description (for project_description.txt)
+## Project Description
 
 ### Project Structure
 
