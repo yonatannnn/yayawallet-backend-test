@@ -101,6 +101,8 @@ The system checks the webhook’s timestamp and rejects requests older than 5 mi
 
     ```bash
     export SECRET_KEY=your_secret_key
+    export PORT=your_port_number
+    export MONGODB_URL=your_mongodb_url
     ```
 
 3. Run the server:
