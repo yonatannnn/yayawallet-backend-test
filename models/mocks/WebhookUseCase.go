@@ -34,6 +34,20 @@ func (_m *WebhookUseCase) ProcessWebhook(payload models.WebhookPayload, received
 	return r0, r1
 }
 
+// Save provides a mock function with given fields: payload
+func (_m *WebhookUseCase) Save(payload models.WebhookPayload) error {
+	ret := _m.Called(payload)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(models.WebhookPayload) error); ok {
+		r0 = rf(payload)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 type mockConstructorTestingTNewWebhookUseCase interface {
 	mock.TestingT
 	Cleanup(func())

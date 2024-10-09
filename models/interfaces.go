@@ -14,4 +14,5 @@ type WebhookService interface {
 
 type WebhookUseCase interface {
 	ProcessWebhook(payload WebhookPayload, receivedSignature string) (bool, error)
+	Save(payload WebhookPayload) error
 }

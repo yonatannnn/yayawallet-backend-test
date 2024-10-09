@@ -26,10 +26,14 @@ func (uc *WebhookUseCase) ProcessWebhook(payload models.WebhookPayload, received
 		return false, nil
 	}
 
+	return true, nil
+}
+
+func (uc *WebhookUseCase) Save(payload models.WebhookPayload) error {
 	err := uc.service.Save(payload)
 	if err != nil {
-		return false, err
+		return err
 	}
 
-	return true, nil
+	return nil
 }
