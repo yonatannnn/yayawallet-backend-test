@@ -18,7 +18,7 @@ var secretKey = os.Getenv("SECRET_KEY")
 
 func (uc *WebhookUseCase) ProcessWebhook(payload models.WebhookPayload, receivedSignature string) (bool, error) {
 	if uc.service.VerifySignature(payload, receivedSignature, secretKey) {
-		return false, nil
+		return true, nil
 	}
 
 	currentTime := time.Now().Unix()
